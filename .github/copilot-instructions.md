@@ -1,0 +1,7 @@
+- Use **TypeScript** for all components, utilities, and API routes.
+- Follow **ESLint** and **Prettier** rules for consistent formatting.
+- Utilize **React Hooks** efficiently and avoid unnecessary re-renders.
+- Always use **server-side rendering (SSR)** or **static site generation (SSG)** where applicable.
+- For API calls, use **React Query** or `fetch` with SWR for data fetching.
+- Use **Jest** and **React Testing Library** for unit and integration tests.
+- Mock API calls to avoid external dependencies in tests.
