@@ -4,7 +4,8 @@ import { useState, useEffect } from "react";
 
 export default function Home() {
   const [todo, setTodo] = useState("");
-  const [todoList, setTodoList] = useState<string[]>([]);
+  const [todoList, setTodoList] = useState<{ text: string; category: string }[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState("home");
 
   useEffect(() => {
     const storedTodos = localStorage.getItem("todoList");
@@ -19,8 +20,9 @@ export default function Home() {
 
   const handleAddTodo = () => {
     if (todo.trim()) {
-      setTodoList([...todoList, todo]);
+      setTodoList([...todoList, { text: todo, category: selectedCategory }]);
       setTodo("");
+      setSelectedCategory("home");
     }
   };
 
@@ -43,6 +45,15 @@ export default function Home() {
               placeholder="What needs to be done?"
               onKeyDown={(e) => e.key === "Enter" && handleAddTodo()}
             />
+            <select
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
+              className="border border-gray-200 p-3 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all"
+            >
+              <option value="home">Home</option>
+              <option value="hobbies">Hobbies</option>
+              <option value="work">Work</option>
+            </select>
             <button 
               onClick={handleAddTodo} 
               className="bg-blue-500 text-white p-3 rounded-lg shadow-md hover:bg-blue-600 transition-colors duration-200 flex items-center justify-center"
@@ -60,7 +71,7 @@ export default function Home() {
           ) : (
             todoList.map((item, index) => (
               <li key={index} className="bg-white p-4 rounded-xl shadow-md flex justify-between items-center group hover:shadow-lg transition-shadow duration-200">
-                <span className="text-gray-700">{item}</span>
+                <span className="text-gray-700">{item.text} <span className="text-gray-500 italic">({item.category})</span></span>
                 <button 
                   onClick={() => handleRemoveTodo(index)} 
                   className="text-gray-400 hover:text-red-500 hover:bg-red-50 p-2 rounded-full transition-colors duration-200"
